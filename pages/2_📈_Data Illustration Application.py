@@ -10,7 +10,7 @@ if "processed_files" not in st.session_state:
     st.session_state.processed_files = {}
 
 # Set main background
-set_main_background("assets/main_bg.png")
+set_main_background("assets/vis_bg.png")
 
 
 st.title("🛠️ Data Illustration Application")
