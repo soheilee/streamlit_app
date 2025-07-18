@@ -126,15 +126,13 @@ class FilePageHandler:
 
         st.write("### Delete Columns and Rows")
         cols_to_delete = st.multiselect(f"Columns to delete for {self.page_name}", df_combined.columns)
-        rows_to_delete = st.multiselect(f"Row indices to delete for {self.page_name}", df_combined.index.tolist())
-
+        
         if st.button(f"Delete Selected Columns and Rows for {self.page_name}"):
             df_combined.drop(columns=cols_to_delete, inplace=True, errors='ignore')
-            df_combined.drop(index=rows_to_delete, inplace=True, errors='ignore')
             st.session_state.processed_files[file_name] = df_combined
             st.session_state[combined_key] = df_combined  # Keep combined cached df updated
             st.success("✅ Deletion complete.")
-            st.experimental_rerun()
+            st.rerun()
 
         if st.button(f"Clean & Describe All Columns ({self.page_name})"):
             try:
@@ -153,4 +151,4 @@ class FilePageHandler:
         if st.button(f"Finalize {self.page_name}"):
             st.session_state.finalized_files[file_name] = df_combined
             st.success(f"{file_name} finalized!")
-            st.experimental_rerun()
+            st.rerun()

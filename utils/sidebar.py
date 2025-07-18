@@ -4,13 +4,10 @@ import io
 from utils.background_style import *
 
 class SidebarManager:
-    def __init__(self, logo_path="assets/logo.png"):
-        self.logo_path = logo_path
+    def __init__(self, ):
         self.setup_sidebar()
 
     def setup_sidebar(self):
-        # Sidebar Logo
-        st.sidebar.image(self.logo_path, use_container_width=True)
 
         # Number of files input
         if "num_files" not in st.session_state:

@@ -18,7 +18,7 @@ set_main_background("assets/main_bg.png")
 SidebarManager()
 
 
-st.title("Data Quality Application")
+st.title("🛠️ Data Quality Application")
 st.write(f"Clean, describe, visualise and select data for AI models.")
 
 
