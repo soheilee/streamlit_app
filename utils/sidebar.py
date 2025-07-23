@@ -4,7 +4,7 @@ import io
 from utils.background_style import *
 
 class SidebarManager:
-    def __init__(self, ):
+    def __init__(self ):
         self.setup_sidebar()
 
     def setup_sidebar(self):
