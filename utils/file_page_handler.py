@@ -145,6 +145,45 @@ class FilePageHandler:
 
         # Step 4 UI
         display_app_header(main_txt="Step 4",
+                    sub_txt="Plot Selected Columns vs First Column",
+                    is_sidebar=False)
+
+        if not df_combined.empty:
+            first_col = df_combined.columns[0]
+            available_cols = [col for col in df_combined.columns if col != first_col]
+
+            selected_plot_cols = st.multiselect(
+                f"Select columns to plot against '{first_col}'",
+                available_cols
+            )
+
+            if selected_plot_cols:
+                try:
+                    # Copy relevant columns
+                    plot_df = df_combined[[first_col] + selected_plot_cols].copy()
+
+                    # Rename first column to a safe name for Altair
+                    plot_df.rename(columns={first_col: "x_axis"}, inplace=True)
+
+                    # Convert x_axis to a valid type for plotting
+                    try:
+                        plot_df["x_axis"] = pd.to_datetime(plot_df["x_axis"])
+                    except Exception:
+                        try:
+                            plot_df["x_axis"] = pd.to_numeric(plot_df["x_axis"])
+                        except Exception:
+                            plot_df["x_axis"] = plot_df["x_axis"].astype(str)
+
+                    # Plot with safe name as index
+                    st.line_chart(plot_df.set_index("x_axis"))
+
+                except Exception as e:
+                    st.error(f"Error while plotting: {e}")
+            else:
+                st.info("Please select at least one column to plot.")
+
+        # Step 5 UI
+        display_app_header(main_txt="Step 5",
                            sub_txt="Statistical Summarization",
                            is_sidebar=False)
         st.write("### Statistical Summarization")
@@ -159,8 +198,10 @@ class FilePageHandler:
             except Exception as e:
                 st.error(f"❌ Error during cleaning: {e}")
 
-        # Step 5 UI
-        display_app_header(main_txt="Step 5",
+        
+
+        # Step 6 UI
+        display_app_header(main_txt="Step 6",
                            sub_txt="Finalize and prepare the file",
                            is_sidebar=False)
         st.write("### Finalize")
