@@ -145,7 +145,7 @@ class FilePageHandler:
 
         # Step 4 UI
         display_app_header(main_txt="Step 4",
-                    sub_txt="Plot Selected Columns vs First Column",
+                    sub_txt="Plot the data vs time",
                     is_sidebar=False)
 
         if not df_combined.empty:
