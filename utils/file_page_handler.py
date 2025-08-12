@@ -3,6 +3,7 @@ import pandas as pd
 import io
 from utils.data_cleaner import DataCleaner
 from utils.process_file import FileProcessor
+from utils.calculate_daily_average import DailyAverageCalculator
 from utils.background_style import *
 
 class FilePageHandler:
@@ -71,7 +72,9 @@ class FilePageHandler:
         st.write("### Date-Time Combined Preview:")
         st.dataframe(df_combined)
 
-        display_app_header(main_txt="Step 2",
+        
+
+        display_app_header(main_txt="Step 2 (Optional)",
                            sub_txt="Renaming the selected columns",
                            is_sidebar=False)
 
@@ -114,41 +117,50 @@ class FilePageHandler:
                     st.session_state.processed_files[file_name] = df_combined
                     st.session_state[combined_key] = df_combined
                     st.success("✅ Columns renamed.")
-                    st.rerun()
                 else:
                     st.info("No column names were changed.")
             else:
                 st.warning("Please select columns to rename.")
+            st.write("### Column(s) renamed")
+            st.dataframe(df_combined) 
         # Step 3 UI
-        display_app_header(main_txt="Step 3",
+        display_app_header(main_txt="Step 3 (Optional)",
                            sub_txt="Deleting the selected columns and rows",
                            is_sidebar=False)
 
         st.write("### Delete Columns and Rows")
         cols_to_delete = st.multiselect(f"Columns to delete for {self.page_name}", df_combined.columns)
         
-        if st.button(f"Delete Selected Columns and Rows for {self.page_name}"):
+        if st.button(f"Delete Selected Columns from {self.page_name}"):
             df_combined.drop(columns=cols_to_delete, inplace=True, errors='ignore')
             st.session_state.processed_files[file_name] = df_combined
             st.session_state[combined_key] = df_combined  # Keep combined cached df updated
             st.success("✅ Deletion complete.")
-            st.rerun()
+            st.write("### Columns deleted")
+            st.dataframe(df_combined) 
 
-        if st.button(f"Clean & Describe All Columns ({self.page_name})"):
+        # Step 4 UI
+        display_app_header(main_txt="Step 4",
+                           sub_txt="Statistical Summarization",
+                           is_sidebar=False)
+        st.write("### Statistical Summarization")
+        if st.button(f"compute_summary_statistics ({self.page_name})"):
             try:
                 cleaner = DataCleaner(df_combined)  # refresh cleaner with updated df
                 df_cleaned, dropped_cols, desc, before_types, after_types = cleaner.clean_and_describe()
                 st.session_state.processed_files[file_name] = df_cleaned
                 st.session_state[combined_key] = df_cleaned  # update combined cache as well
-                st.success(f"✅ Dropped columns: {list(dropped_cols)}")
+                st.success(f"✅ Dropped columns successful")
                 st.dataframe(desc)
-                st.write("Column Types Before:", before_types)
-                st.write("Column Types After:", after_types)
-                st.dataframe(df_cleaned)
             except Exception as e:
                 st.error(f"❌ Error during cleaning: {e}")
 
+        # Step 5 UI
+        display_app_header(main_txt="Step 5",
+                           sub_txt="Finalize and prepare the file",
+                           is_sidebar=False)
+        st.write("### Finalize")
         if st.button(f"Finalize {self.page_name}"):
             st.session_state.finalized_files[file_name] = df_combined
-            st.success(f"{file_name} finalized!")
-            st.rerun()
+            st.success(f"✅{file_name} Ready!")
+            st.dataframe(df_combined)

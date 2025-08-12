@@ -33,9 +33,9 @@ class FileProcessor:
                 df_sheet = pd.read_excel(xls, sheet_name=sheet_name, header=None)
 
                 header_detector = HeaderRowDetector(df_sheet)
-                header_rows = header_detector.detect()
+                header_rows = header_detector.detect()+1
                 st.markdown(
-                    f"<span style='font-size:20px; color:#A74369; text_align:center; font-weight: bold;'>{header_rows} header rows in SHEET: {sheet_name} detected</span>",
+                    f"<span style='font-size:20px; color:#A74369; text_align:center; font-weight: bold;'>{header_rows} Header-Rows in ({sheet_name}) detected</span>",
                     unsafe_allow_html=True
                 )
                 

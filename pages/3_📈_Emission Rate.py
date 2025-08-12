@@ -26,7 +26,7 @@ st.markdown("""
 
 # Use styled div to show title + text
 st.markdown('<div class="custom-textbox"><h1>🛠️ Emission Rate Calculcation</h1>'
-            '<p>Explore, Visualise, and Unlock your data’s potential.</p></div>',
+            '<p>Explore and visualise your data.</p></div>',
             unsafe_allow_html=True)
 
 

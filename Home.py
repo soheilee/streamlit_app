@@ -16,6 +16,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Use styled div to show title + text
-st.markdown('<div class="custom-textbox"><h1>Welcome to Variolytics App Suite</h1>'
-            '<p>Use the sidebar to navigate between the apps.</p></div>',
+st.markdown('<div class="custom-textbox"><h1></h1>'
+            '<p>.</p></div>',
             unsafe_allow_html=True)

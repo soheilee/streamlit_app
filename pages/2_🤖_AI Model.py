@@ -10,7 +10,7 @@ if "processed_files" not in st.session_state:
     st.session_state.processed_files = {}
 
 # Set main background
-set_main_background("assets/home_background.png")
+set_main_background("assets/vis_bg.png")
 # Add readable text box style
 st.markdown("""
     <style>
@@ -23,8 +23,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Use styled div to show title + text
-st.markdown('<div class="custom-textbox"><h1>🤖 AI Model Application</h1>'
-            '<p>Smart and Clean AI Product</p></div>',
+st.markdown('<div class="custom-textbox"><h1>🤖 AI Model</h1>'
+            '<p></p></div>',
             unsafe_allow_html=True)
 
 

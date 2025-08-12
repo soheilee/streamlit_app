@@ -26,6 +26,8 @@ class SidebarManager:
         # Merge button
         if st.sidebar.button("Merge Finalized Files Horizontally") and st.session_state.get("finalized_files"):
             self.merge_and_download(st.session_state.finalized_files)
+        if st.sidebar.button("Merge Finalized Files Vertically") and st.session_state.get("finalized_files"):
+            self.merge_and_download(st.session_state.finalized_files)
 
     def merge_and_download(self, files_dict):
         merged_df = pd.concat(files_dict.values(), axis=1)
