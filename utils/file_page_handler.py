@@ -72,7 +72,11 @@ class FilePageHandler:
         st.write("### Date-Time Combined Preview:")
         st.dataframe(df_combined)
 
-        
+        dailyAveraged = DailyAverageCalculator(df_combined)
+        df_combined = dailyAveraged.calculate()
+
+        st.write("### Daily Averaged Preview:")
+        st.dataframe(df_combined)
 
         display_app_header(main_txt="Step 2 (Optional)",
                            sub_txt="Renaming the selected columns",
